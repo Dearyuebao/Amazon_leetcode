@@ -1,0 +1,44 @@
+//dp solution: TLE
+class Solution{
+  public int jump(int[] nums){
+    int[] dp=new int[nums.length];
+    dp[0]=0;
+    for(int i=1;i<nums.length;i++)
+    {
+      dp[i]=Integer.MAX_VALUE;
+    }
+    for(int i=1;i<nums.length;i++)
+    {
+      for(int j=0;j<i;j++)
+      {
+        if(dp[j]!=Integer.MAX_VALUE&&j+nums[j]>=i)
+        {
+          dp[i]=Math.min(dp[i],dp[j]+1);
+        }
+      }
+    }
+    return dp[nums.length-1];
+  }
+}
+
+//greedy solution
+class Solution{
+  public int jump(int[] nums){
+    int start=0,end=0,jump=0;
+    int far=end;
+    while(end<nums.length-1)
+    {
+      jump++;
+      for(int i=start;i<=end;i++)
+      {
+        if(nums[i]+i>far)
+        {
+          far=nums[i]+i;
+        }
+      }
+      start=end+1;
+      end=far;
+    }
+    return jump;
+  }
+}
