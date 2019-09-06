@@ -1,0 +1,45 @@
+class Solution{
+  public boolean exist(char[][] board,String word)
+  {
+    if(board==null||board.length==0)
+    {
+      return false;
+    }
+    if(word.length()==0)
+    {
+      return true;
+    }
+    
+    for(int i=0;i<board.length;i++)
+    {
+      for(int j=0;j<board[0].length;j++)
+      {
+        if(board[i][j]==word.charAt(0))
+        {
+          boolean str=helper(board,i,j,word,0);
+          if(str)
+          {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
+  
+  public boolean helper(char[][] board,int i,int j,String word,int start)
+  {
+    if(start==word.length())
+    {
+    return true;
+    }
+    if(i<0||i>=board.length||j<0||j>=board[0].length||word.charAt(start)!=board[i][j])
+    {
+      return false;
+    }
+    board[i][j]='#';
+    boolean str=find(board,i-1,j,word,start+1)||find(board,i+1,j,word,start+1)||find(board,i,j-1,word,start+1)||find(board,i,j+1,word,start+1);
+    board[i][j]=word.charAr(start);
+    return str;
+  }
+}
