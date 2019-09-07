@@ -1,0 +1,37 @@
+class Solution{
+  public List<List<Integer>> zigzagLevelOrder(TreeNode root){
+    List<List<Integer>> res=new ArrayList<List<Integer>>();
+    Stack<TreeNode> currLevel=new Stack<TreeNode>();
+    Stack<TreeNode> nextLevel=new Stack<TreeNode>();
+    Stack<TreeNode> tmp;
+    
+    currLevel.push(root);
+    boolean flag=true;
+    while(!currLevel.isEmpty())
+    {
+      ArrayList<Integer> curr=new ArrayList<Integer>();
+      while(!currLevel.isEmpty())
+      {
+        TreeNode node=currLevel.pop();
+        curr.add(node.val);
+        if(flag)
+        {
+        if(node.left!=null)
+          nextLevel.push(node.left);//注意堆栈：先入后出！！！写反了
+        if(node.right!=null)
+          nextLevel.push(node.right);
+        }
+        else{
+          if(node.right!=null) nextLevel.push(node.right);
+          if(node.left!=null) nextLevel.push(node.left);
+        }
+      }
+      flag=!flag;
+      res.add(curr);
+      tmp=currLevel;
+      currLevel=nextLevel;
+      nextLevel=tmp;
+    }
+  }
+  return res;
+}
